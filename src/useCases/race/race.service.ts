@@ -3,6 +3,7 @@ import { CreateRaceDTO, SetPilotsToRaceDTO } from './dto/create-race.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UpdateRaceDTO } from './dto/update-race.sdto';
 import { PatchRaceDTO } from './dto/patch-race.dto';
+import { RemovePilotsFromRaceDTO } from './dto/remove-pilots.dto';
 
 @Injectable()
 export class RaceService {
@@ -78,6 +79,19 @@ export class RaceService {
   async delete(id: number) {
     return this.prisma.race.delete({
       where: { id },
+      include: {
+        RacePilot: true,
+      },
+    });
+  }
+
+  async removePilots({ racePilotIds }: RemovePilotsFromRaceDTO) {
+    return this.prisma.racePilot.deleteMany({
+      where: {
+        id: {
+          in: racePilotIds,
+        },
+      },
     });
   }
 }

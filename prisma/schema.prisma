@@ -50,7 +50,7 @@ model RacePilot {
   position Int   @default(1)
   pilot    Pilot @relation(fields: [pilotId], references: [id])
   pilotId  Int
-  race     Race  @relation(fields: [raceId], references: [id])
+  race     Race  @relation(fields: [raceId], references: [id], onDelete: Cascade)
   raceId   Int
   Bet      Bet[]
   car      Car   @relation(fields: [carId], references: [id])

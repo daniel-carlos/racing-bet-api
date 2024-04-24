@@ -15,6 +15,7 @@ import { CreateRaceDTO, SetPilotsToRaceDTO } from './dto/create-race.dto';
 import { RaceService } from './race.service';
 import { UpdateRaceDTO } from './dto/update-race.sdto';
 import { PatchRaceDTO } from './dto/patch-race.dto';
+import { RemovePilotsFromRaceDTO } from './dto/remove-pilots.dto';
 
 @Controller('races')
 export class RaceController {
@@ -52,6 +53,15 @@ export class RaceController {
   @UsePipes(new ValidationPipe())
   async patch(@Param('id', ParseIntPipe) id, @Body() data: PatchRaceDTO) {
     return this.raceService.patch(id, data);
+  }
+
+  @Post('/remove-pilots/:id')
+  @UsePipes(new ValidationPipe())
+  async removePilots(
+    @Param('id', ParseIntPipe) id,
+    @Body() data: RemovePilotsFromRaceDTO,
+  ) {
+    return this.raceService.removePilots(data);
   }
 
   @Delete(':id')
