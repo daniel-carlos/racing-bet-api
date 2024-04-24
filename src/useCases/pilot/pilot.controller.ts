@@ -11,9 +11,9 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { CreateCarDTO } from 'src/car/dto/create-car.dto';
-import { PatchCarDTO } from 'src/car/dto/patch-car.dto';
-import { UpdateCarDTO } from 'src/car/dto/update-car.dto';
+import { CreateCarDTO } from 'src/useCases/car/dto/create-car.dto';
+import { PatchCarDTO } from 'src/useCases/car/dto/patch-car.dto';
+import { UpdateCarDTO } from 'src/useCases/car/dto/update-car.dto';
 import { PilotService } from './pilot-service';
 
 @Controller('pilots')
