@@ -7,6 +7,7 @@ import { PatchCarDTO } from './dto/patch-car.dto';
 @Injectable()
 export class CarService {
   constructor(private readonly prisma: PrismaService) {}
+
   async create(data: CreateCarDTO) {
     return this.prisma.car.create({
       data,

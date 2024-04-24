@@ -61,7 +61,7 @@ model Race {
   id        Int         @id @default(autoincrement())
   Bet       Bet[]
   RacePilot RacePilot[]
-  date      DateTime
+  date      String
 }
 
 model Bet {
