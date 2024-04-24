@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  email     String   @unique
+  username  String   @unique
+  money     Float    @default(0)
+  name      String
+  Bet       Bet[]
+}
+
+model Pilot {
+  id        Int         @id @default(autoincrement())
+  name      String
+  RacePilot RacePilot[]
+  modelURL  String?
+}
+
+model Car {
+  id           Int         @id @default(autoincrement())
+  name         String
+  RacePilot    RacePilot[]
+  speed        Float
+  acceleration Float
+  steering     Float
+}
+
+model RacePilot {
+  id       Int   @id @default(autoincrement())
+  position Int   @default(1)
+  pilot    Pilot @relation(fields: [pilotId], references: [id])
+  pilotId  Int
+  race     Race  @relation(fields: [raceId], references: [id])
+  raceId   Int
+  Bet      Bet[]
+  car      Car   @relation(fields: [carId], references: [id])
+  carId    Int
+}
+
+model Race {
+  id        Int         @id @default(autoincrement())
+  Bet       Bet[]
+  RacePilot RacePilot[]
+  date      DateTime
+}
+
+model Bet {
+  id       Int  @id @default(autoincrement())
+  race     Race @relation(fields: [raceId], references: [id])
+  raceId   Int
+  position Int
+
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int
+  racePilot   RacePilot @relation(fields: [racePilotId], references: [id])
+  racePilotId Int
+
+  value Float @default(0)
+}

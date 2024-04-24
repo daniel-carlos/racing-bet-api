@@ -1,0 +1,57 @@
+-- CreateTable
+CREATE TABLE "User" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "email" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
+    "money" REAL NOT NULL DEFAULT 0
+);
+
+-- CreateTable
+CREATE TABLE "Pilot" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "name" TEXT NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "Car" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "name" TEXT NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "RacePilot" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "position" INTEGER NOT NULL DEFAULT 1,
+    "pilotId" INTEGER NOT NULL,
+    "raceId" INTEGER NOT NULL,
+    "carId" INTEGER NOT NULL,
+    CONSTRAINT "RacePilot_pilotId_fkey" FOREIGN KEY ("pilotId") REFERENCES "Pilot" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "RacePilot_raceId_fkey" FOREIGN KEY ("raceId") REFERENCES "Race" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "RacePilot_carId_fkey" FOREIGN KEY ("carId") REFERENCES "Car" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Race" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "date" DATETIME NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "Bet" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "raceId" INTEGER NOT NULL,
+    "position" INTEGER NOT NULL,
+    "userId" INTEGER NOT NULL,
+    "racePilotId" INTEGER NOT NULL,
+    "value" REAL NOT NULL DEFAULT 0,
+    CONSTRAINT "Bet_raceId_fkey" FOREIGN KEY ("raceId") REFERENCES "Race" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "Bet_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "Bet_racePilotId_fkey" FOREIGN KEY ("racePilotId") REFERENCES "RacePilot" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
