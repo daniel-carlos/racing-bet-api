@@ -38,6 +38,7 @@ model Pilot {
 model Car {
   id           Int         @id @default(autoincrement())
   name         String
+  prefabName   String      @default("")
   RacePilot    RacePilot[]
   speed        Float
   acceleration Float

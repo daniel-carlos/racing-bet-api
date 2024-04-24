@@ -124,24 +124,28 @@ export const fakeUsers = [
 export const fakeCars = [
   {
     name: 'Lightning Bolt',
+    prefabName: 'bolt',
     speed: 9.5,
     acceleration: 3.2,
     steering: 7.8,
   },
   {
     name: 'Apex Predator',
+    prefabName: 'apex',
     speed: 9.8,
     acceleration: 3.5,
     steering: 6.9,
   },
   {
     name: 'Iron Eagle',
+    prefabName: 'iron',
     speed: 10.0,
     acceleration: 3.8,
     steering: 7.5,
   },
   {
     name: 'Thunderclap',
+    prefabName: 'thunder',
     speed: 9.7,
     acceleration: 3.4,
     steering: 7.2,
