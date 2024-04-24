@@ -14,7 +14,7 @@ import {
 import { CreateCarDTO } from './dto/create-car.dto';
 import { UpdateCarDTO } from './dto/update-car.dto';
 import { PatchCarDTO } from './dto/patch-car.dto';
-import { CarService } from './dto/car.service';
+import { CarService } from './car.service';
 
 @Controller('cars')
 export class CarController {

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateCarDTO } from './create-car.dto';
-import { UpdateCarDTO } from './update-car.dto';
-import { PatchCarDTO } from './patch-car.dto';
+import { CreateCarDTO } from './dto/create-car.dto';
+import { UpdateCarDTO } from './dto/update-car.dto';
+import { PatchCarDTO } from './dto/patch-car.dto';
 
 @Injectable()
 export class CarService {
