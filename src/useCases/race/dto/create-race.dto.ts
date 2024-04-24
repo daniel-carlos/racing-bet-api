@@ -5,14 +5,6 @@ export class CreateRaceDTO {
   date: string;
 }
 
-export class CreateRaceFullDTO {
-  @IsDateString()
-  date: string;
-
-  @IsInt({ each: true })
-  pilots: number[];
-}
-
 export class SetPilotsToRaceDTO {
   @IsInt()
   raceId: number;

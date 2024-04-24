@@ -6,14 +6,18 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class RaceService {
   constructor(private readonly prisma: PrismaService) {}
 
+  async list() {
+    return this.prisma.race.findMany({
+      include: {
+        RacePilot: true,
+      },
+    });
+  }
+
   async createSimple(data: CreateRaceDTO) {
     return this.prisma.race.create({
       data,
     });
-  }
-
-  zip(array1, array2) {
-    return array1.map((_, i) => [array1[i], array2[i]]);
   }
 
   async SetPilots({ carIds, pilotIds, raceId }: SetPilotsToRaceDTO) {
@@ -30,7 +34,6 @@ export class RaceService {
           raceId,
           position: index + 1, // Set positions in order of creation
         })),
-        // skipDuplicates: true, // Avoid creating duplicates if pilot/car combo exists
       });
 
       return createdRacePilots;

@@ -1,15 +1,12 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import {
-  CreateRaceDTO,
-  CreateRaceFullDTO,
-  SetPilotsToRaceDTO,
-} from './dto/create-race.dto';
+import { CreateRaceDTO, SetPilotsToRaceDTO } from './dto/create-race.dto';
 import { RaceService } from './race.service';
 
 @Controller('races')
@@ -22,15 +19,14 @@ export class RaceController {
     return this.raceService.createSimple(data);
   }
 
-  @Post('/full')
-  @UsePipes(new ValidationPipe())
-  async createFull(@Body() data: CreateRaceFullDTO) {
-    return { data };
-  }
-
   @Post('/set-pilots')
   @UsePipes(new ValidationPipe())
   async setPilots(@Body() data: SetPilotsToRaceDTO) {
     return this.raceService.SetPilots(data);
+  }
+
+  @Get()
+  async list() {
+    return this.raceService.list();
   }
 }
