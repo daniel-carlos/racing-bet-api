@@ -1,13 +1,20 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  Param,
+  ParseIntPipe,
+  Patch,
   Post,
+  Put,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { CreateRaceDTO, SetPilotsToRaceDTO } from './dto/create-race.dto';
 import { RaceService } from './race.service';
+import { UpdateRaceDTO } from './dto/update-race.sdto';
+import { PatchRaceDTO } from './dto/patch-race.dto';
 
 @Controller('races')
 export class RaceController {
@@ -28,5 +35,27 @@ export class RaceController {
   @Get()
   async list() {
     return this.raceService.list();
+  }
+
+  @Get(':id')
+  async show(@Param('id', ParseIntPipe) id) {
+    return this.raceService.show(id);
+  }
+
+  @Put(':id')
+  @UsePipes(new ValidationPipe())
+  async update(@Param('id', ParseIntPipe) id, @Body() data: UpdateRaceDTO) {
+    return this.raceService.update(id, data);
+  }
+
+  @Patch(':id')
+  @UsePipes(new ValidationPipe())
+  async patch(@Param('id', ParseIntPipe) id, @Body() data: PatchRaceDTO) {
+    return this.raceService.patch(id, data);
+  }
+
+  @Delete(':id')
+  async delete(@Param('id', ParseIntPipe) id) {
+    return this.raceService.delete(id);
   }
 }

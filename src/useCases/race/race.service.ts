@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { CreateRaceDTO, SetPilotsToRaceDTO } from './dto/create-race.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { UpdateRaceDTO } from './dto/update-race.sdto';
+import { PatchRaceDTO } from './dto/patch-race.dto';
 
 @Injectable()
 export class RaceService {
@@ -9,7 +11,20 @@ export class RaceService {
   async list() {
     return this.prisma.race.findMany({
       include: {
-        RacePilot: true,
+        RacePilot: {
+          select: { car: true, pilot: true },
+        },
+      },
+    });
+  }
+
+  async show(id) {
+    return this.prisma.race.findUnique({
+      where: { id },
+      include: {
+        RacePilot: {
+          select: { car: true, pilot: true },
+        },
       },
     });
   }
@@ -46,7 +61,23 @@ export class RaceService {
     }
   }
 
-  async createFull(data: CreateRaceDTO) {
-    return { data };
+  async update(id: number, data: UpdateRaceDTO) {
+    return this.prisma.race.update({
+      where: { id },
+      data,
+    });
+  }
+
+  async patch(id: number, data: PatchRaceDTO) {
+    return this.prisma.race.update({
+      where: { id },
+      data,
+    });
+  }
+
+  async delete(id: number) {
+    return this.prisma.race.delete({
+      where: { id },
+    });
   }
 }
