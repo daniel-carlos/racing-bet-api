@@ -24,7 +24,10 @@ export class RaceService {
       where: { id },
       include: {
         RacePilot: {
-          select: { car: true, pilot: true },
+          select: { car: true, pilot: true, position: true },
+          orderBy: {
+            position: 'asc',
+          },
         },
       },
     });
