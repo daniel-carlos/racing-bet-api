@@ -28,42 +28,52 @@ model User {
   Bet       Bet[]
 }
 
-model Pilot {
-  id        Int         @id @default(autoincrement())
+model Driver {
+  id        Int          @id @default(autoincrement())
   name      String
-  RacePilot RacePilot[]
+  RaceDriver RaceDriver[]
   modelURL  String?
 }
 
 model Car {
-  id           Int         @id @default(autoincrement())
+  id           Int          @id @default(autoincrement())
   name         String
-  prefabName   String      @default("")
-  RacePilot    RacePilot[]
+  prefabName   String       @default("")
+  RaceDriver    RaceDriver[]
   speed        Float
   acceleration Float
   steering     Float
 }
 
-model RacePilot {
-  id       Int   @id @default(autoincrement())
-  position Int   @default(1)
-  pilot    Pilot @relation(fields: [pilotId], references: [id])
-  pilotId  Int
-  race     Race  @relation(fields: [raceId], references: [id], onDelete: Cascade)
-  raceId   Int
-  Bet      Bet[]
-  car      Car   @relation(fields: [carId], references: [id])
-  carId    Int
+enum RaceFinalStatus {
+  FINISHED // O drivero completou a corrida da maneira tradicional.
+  RETIREMENT_CAR_FAILURE // O drivero não completou a corrida devido a um problema com o carro.
+  RETIREMENT_TIME_LIMIT // O drivero foi eliminado da corrida por tempo limite.
+}
+
+model RaceDriver {
+  id        Int    @id @default(autoincrement())
+  gridPlace Int    @default(1)
+  driver    Driver @relation(fields: [driverId], references: [id])
+  driverId   Int
+  race      Race   @relation(fields: [raceId], references: [id], onDelete: Cascade)
+  raceId    Int
+  Bet       Bet[]
+  car       Car    @relation(fields: [carId], references: [id])
+  carId     Int
+
+  finalStatus RaceFinalStatus?
+  finalTime   Float?
+  finalPlace  Int?
 }
 
 model Race {
-  id        Int         @id @default(autoincrement())
+  id        Int          @id @default(autoincrement())
   Bet       Bet[]
-  RacePilot RacePilot[]
+  RaceDriver RaceDriver[]
   date      String
-  raceTime  Int         @default(180)
-  laps      Int         @default(3)
+  raceTime  Int          @default(180)
+  laps      Int          @default(3)
 }
 
 model Bet {
@@ -72,10 +82,10 @@ model Bet {
   raceId   Int
   position Int
 
-  user        User      @relation(fields: [userId], references: [id])
+  user        User       @relation(fields: [userId], references: [id])
   userId      Int
-  racePilot   RacePilot @relation(fields: [racePilotId], references: [id])
-  racePilotId Int
+  raceDriver   RaceDriver @relation(fields: [raceDriverId], references: [id])
+  raceDriverId Int
 
   value Float @default(0)
 }

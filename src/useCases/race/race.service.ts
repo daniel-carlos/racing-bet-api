@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import {
   CreateRaceDTO,
-  CreateRaceWithPilotsDTO,
-  SetPilotsToRaceDTO,
+  CreateRaceWithDriversDTO,
+  SetDriversToRaceDTO,
 } from './dto/create-race.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UpdateRaceDTO } from './dto/update-race.sdto';
 import { PatchRaceDTO } from './dto/patch-race.dto';
-import { RemovePilotsFromRaceDTO } from './dto/remove-pilots.dto';
+import { RemoveDriversFromRaceDTO } from './dto/remove-drivers.dto';
 
 @Injectable()
 export class RaceService {
@@ -16,8 +16,8 @@ export class RaceService {
   async list() {
     return this.prisma.race.findMany({
       include: {
-        RacePilot: {
-          select: { car: true, pilot: true },
+        RaceDriver: {
+          select: { car: true, driver: true },
         },
       },
     });
@@ -27,10 +27,10 @@ export class RaceService {
     return this.prisma.race.findUnique({
       where: { id },
       include: {
-        RacePilot: {
-          select: { car: true, pilot: true, position: true },
+        RaceDriver: {
+          select: { car: true, driver: true, gridPlace: true },
           orderBy: {
-            position: 'asc',
+            gridPlace: 'asc',
           },
         },
       },
@@ -43,37 +43,37 @@ export class RaceService {
     });
   }
 
-  async createWithPilots(data: CreateRaceWithPilotsDTO) {
+  async createWithDrivers(data: CreateRaceWithDriversDTO) {
     const race = await this.prisma.race.create({
       data: {
         date: data.date,
       },
     });
 
-    return this.SetPilots({
+    return this.SetDrivers({
       carIds: data.carIds,
-      pilotIds: data.pilotIds,
+      driverIds: data.driverIds,
       raceId: race.id,
     });
   }
 
-  async SetPilots({ carIds, pilotIds, raceId }: SetPilotsToRaceDTO) {
+  async SetDrivers({ carIds, driverIds, raceId }: SetDriversToRaceDTO) {
     // Input validation (optional but recommended)
-    if (pilotIds.length !== carIds.length) {
-      throw new Error('pilotIds and carIds arrays must have the same length');
+    if (driverIds.length !== carIds.length) {
+      throw new Error('driverIds and carIds arrays must have the same length');
     }
 
     try {
-      const createdRacePilots = await this.prisma.racePilot.createMany({
-        data: pilotIds.map((pilotId, index) => ({
-          pilotId,
+      const createdRaceDrivers = await this.prisma.raceDriver.createMany({
+        data: driverIds.map((driverId, index) => ({
+          driverId,
           carId: carIds[index],
           raceId,
           position: index + 1, // Set positions in order of creation
         })),
       });
 
-      return createdRacePilots;
+      return createdRaceDrivers;
     } catch (error) {
       // Re-throw the error to propagate it
       return {
@@ -101,16 +101,16 @@ export class RaceService {
     return this.prisma.race.delete({
       where: { id },
       include: {
-        RacePilot: true,
+        RaceDriver: true,
       },
     });
   }
 
-  async removePilots({ racePilotIds }: RemovePilotsFromRaceDTO) {
-    return this.prisma.racePilot.deleteMany({
+  async removeDrivers({ raceDriverIds }: RemoveDriversFromRaceDTO) {
+    return this.prisma.raceDriver.deleteMany({
       where: {
         id: {
-          in: racePilotIds,
+          in: raceDriverIds,
         },
       },
     });

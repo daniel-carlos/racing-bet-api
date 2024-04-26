@@ -1,8 +1,8 @@
 import { IsInt } from 'class-validator';
 
-export class RemovePilotsFromRaceDTO {
+export class RemoveDriversFromRaceDTO {
   @IsInt({
     each: true,
   })
-  racePilotIds: number[];
+  raceDriverIds: number[];
 }

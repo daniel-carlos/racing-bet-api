@@ -3,12 +3,12 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './useCases/user/user.module';
 import { PrismaModule } from './prisma/prisma.module';
-import { PilotModule } from './useCases/pilot/pilot.module';
+import { DriverModule } from './useCases/driver/driver.module';
 import { CarModule } from './useCases/car/car.module';
 import { RaceModule } from './useCases/race/race.module';
 
 @Module({
-  imports: [PrismaModule, UserModule, PilotModule, CarModule, RaceModule],
+  imports: [PrismaModule, UserModule, DriverModule, CarModule, RaceModule],
   controllers: [AppController],
   providers: [AppService],
 })

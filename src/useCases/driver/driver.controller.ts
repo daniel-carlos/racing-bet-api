@@ -14,42 +14,42 @@ import {
 import { CreateCarDTO } from 'src/useCases/car/dto/create-car.dto';
 import { PatchCarDTO } from 'src/useCases/car/dto/patch-car.dto';
 import { UpdateCarDTO } from 'src/useCases/car/dto/update-car.dto';
-import { PilotService } from './pilot-service';
+import { DriverService } from './driver-service';
 
-@Controller('pilots')
-export class PilotController {
-  constructor(private readonly pilotService: PilotService) {}
+@Controller('drivers')
+export class DriverController {
+  constructor(private readonly driverService: DriverService) {}
 
   @Post()
   @UsePipes(new ValidationPipe())
   async create(@Body() data: CreateCarDTO) {
-    return this.pilotService.create(data);
+    return this.driverService.create(data);
   }
 
   @Get()
   async list() {
-    return this.pilotService.list();
+    return this.driverService.list();
   }
 
   @Get(':id')
   async show(@Param('id', ParseIntPipe) id) {
-    return this.pilotService.show(id);
+    return this.driverService.show(id);
   }
 
   @Put(':id')
   @UsePipes(new ValidationPipe())
   async update(@Param('id', ParseIntPipe) id, @Body() data: UpdateCarDTO) {
-    return this.pilotService.update(id, data);
+    return this.driverService.update(id, data);
   }
 
   @Patch(':id')
   @UsePipes(new ValidationPipe())
   async patch(@Param('id', ParseIntPipe) id, @Body() data: PatchCarDTO) {
-    return this.pilotService.patch(id, data);
+    return this.driverService.patch(id, data);
   }
 
   @Delete(':id')
   async delete(@Param('id', ParseIntPipe) id) {
-    return this.pilotService.delete(id);
+    return this.driverService.delete(id);
   }
 }

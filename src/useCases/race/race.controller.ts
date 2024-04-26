@@ -13,13 +13,13 @@ import {
 } from '@nestjs/common';
 import {
   CreateRaceDTO,
-  CreateRaceWithPilotsDTO,
-  SetPilotsToRaceDTO,
+  CreateRaceWithDriversDTO,
+  SetDriversToRaceDTO,
 } from './dto/create-race.dto';
 import { RaceService } from './race.service';
 import { UpdateRaceDTO } from './dto/update-race.sdto';
 import { PatchRaceDTO } from './dto/patch-race.dto';
-import { RemovePilotsFromRaceDTO } from './dto/remove-pilots.dto';
+import { RemoveDriversFromRaceDTO } from './dto/remove-drivers.dto';
 
 @Controller('races')
 export class RaceController {
@@ -31,16 +31,16 @@ export class RaceController {
     return this.raceService.createSimple(data);
   }
 
-  @Post('/with-pilots')
+  @Post('/with-drivers')
   @UsePipes(new ValidationPipe())
-  async createWithPilots(@Body() data: CreateRaceWithPilotsDTO) {
-    return this.raceService.createWithPilots(data);
+  async createWithDrivers(@Body() data: CreateRaceWithDriversDTO) {
+    return this.raceService.createWithDrivers(data);
   }
 
-  @Post('/set-pilots')
+  @Post('/set-drivers')
   @UsePipes(new ValidationPipe())
-  async setPilots(@Body() data: SetPilotsToRaceDTO) {
-    return this.raceService.SetPilots(data);
+  async setDrivers(@Body() data: SetDriversToRaceDTO) {
+    return this.raceService.SetDrivers(data);
   }
 
   @Get()
@@ -65,13 +65,13 @@ export class RaceController {
     return this.raceService.patch(id, data);
   }
 
-  @Post('/remove-pilots/:id')
+  @Post('/remove-drivers/:id')
   @UsePipes(new ValidationPipe())
-  async removePilots(
+  async removeDrivers(
     @Param('id', ParseIntPipe) id,
-    @Body() data: RemovePilotsFromRaceDTO,
+    @Body() data: RemoveDriversFromRaceDTO,
   ) {
-    return this.raceService.removePilots(data);
+    return this.raceService.removeDrivers(data);
   }
 
   @Delete(':id')

@@ -29,7 +29,7 @@ export const cars = [
   },
 ];
 
-export const pilots = [
+export const drivers = [
   { name: 'Jaxon Blaze', modelURL: 'common_pilot 1' },
   { name: 'Ace Lightning', modelURL: 'common_pilot 2' },
   { name: 'Maverick Storm', modelURL: 'common_pilot 3' },

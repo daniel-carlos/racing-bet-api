@@ -1,6 +1,6 @@
 import { IsString } from 'class-validator';
 
-export class CreatePilotDTO {
+export class CreateDriverDTO {
   @IsString()
   name: string;
   modelURL?: string;

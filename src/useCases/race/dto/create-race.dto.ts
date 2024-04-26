@@ -5,23 +5,23 @@ export class CreateRaceDTO {
   date: string;
 }
 
-export class SetPilotsToRaceDTO {
+export class SetDriversToRaceDTO {
   @IsInt()
   raceId: number;
 
   @IsInt({ each: true })
-  pilotIds: number[];
+  driverIds: number[];
 
   @IsInt({ each: true })
   carIds: number[];
 }
 
-export class CreateRaceWithPilotsDTO {
+export class CreateRaceWithDriversDTO {
   @IsDateString()
   date: string;
 
   @IsInt({ each: true })
-  pilotIds: number[];
+  driverIds: number[];
 
   @IsInt({ each: true })
   carIds: number[];

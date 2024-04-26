@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { cars, pilots } from './initial-data';
+import { cars, drivers } from './initial-data';
 import { fakeUsers } from './fake-data';
 
 const prisma = new PrismaClient();
@@ -10,8 +10,8 @@ async function main() {
   await prisma.car.createMany({ data: cars });
   console.log('Created Cars: success');
 
-  await prisma.pilot.createMany({ data: pilots });
-  console.log('Created Pilotss: success');
+  await prisma.driver.createMany({ data: drivers });
+  console.log('Created Driverss: success');
 
   if (process.env.DATABASE_FAKE_POPULATION) {
     await prisma.user.createMany({ data: fakeUsers });
