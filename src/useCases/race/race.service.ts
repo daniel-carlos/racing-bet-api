@@ -69,13 +69,15 @@ export class RaceService {
           driverId,
           carId: carIds[index],
           raceId,
-          position: index + 1, // Set positions in order of creation
+          gridPlace: index + 1, // Set places in order of creation
         })),
       });
 
       return createdRaceDrivers;
     } catch (error) {
       // Re-throw the error to propagate it
+      console.log(error);
+
       return {
         error: true,
         msg: error,
