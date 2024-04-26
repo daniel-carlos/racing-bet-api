@@ -11,7 +11,11 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { CreateRaceDTO, SetPilotsToRaceDTO } from './dto/create-race.dto';
+import {
+  CreateRaceDTO,
+  CreateRaceWithPilotsDTO,
+  SetPilotsToRaceDTO,
+} from './dto/create-race.dto';
 import { RaceService } from './race.service';
 import { UpdateRaceDTO } from './dto/update-race.sdto';
 import { PatchRaceDTO } from './dto/patch-race.dto';
@@ -25,6 +29,12 @@ export class RaceController {
   @UsePipes(new ValidationPipe())
   async createSimple(@Body() data: CreateRaceDTO) {
     return this.raceService.createSimple(data);
+  }
+
+  @Post('/with-pilots')
+  @UsePipes(new ValidationPipe())
+  async createWithPilots(@Body() data: CreateRaceWithPilotsDTO) {
+    return this.raceService.createWithPilots(data);
   }
 
   @Post('/set-pilots')

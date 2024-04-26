@@ -1,5 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CreateRaceDTO, SetPilotsToRaceDTO } from './dto/create-race.dto';
+import {
+  CreateRaceDTO,
+  CreateRaceWithPilotsDTO,
+  SetPilotsToRaceDTO,
+} from './dto/create-race.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UpdateRaceDTO } from './dto/update-race.sdto';
 import { PatchRaceDTO } from './dto/patch-race.dto';
@@ -36,6 +40,20 @@ export class RaceService {
   async createSimple(data: CreateRaceDTO) {
     return this.prisma.race.create({
       data,
+    });
+  }
+
+  async createWithPilots(data: CreateRaceWithPilotsDTO) {
+    const race = await this.prisma.race.create({
+      data: {
+        date: data.date,
+      },
+    });
+
+    return this.SetPilots({
+      carIds: data.carIds,
+      pilotIds: data.pilotIds,
+      raceId: race.id,
     });
   }
 

@@ -15,3 +15,14 @@ export class SetPilotsToRaceDTO {
   @IsInt({ each: true })
   carIds: number[];
 }
+
+export class CreateRaceWithPilotsDTO {
+  @IsDateString()
+  date: string;
+
+  @IsInt({ each: true })
+  pilotIds: number[];
+
+  @IsInt({ each: true })
+  carIds: number[];
+}
