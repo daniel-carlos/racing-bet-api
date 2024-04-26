@@ -1,9 +1,12 @@
 import { PrismaClient } from '@prisma/client';
+import { cars, pilots } from './initial-data';
+
 const prisma = new PrismaClient();
 
-console.log('SEEEEEEEEEEEEEEEEEEEEEEEEEEED');
-
-async function main() {}
+async function main() {
+  await prisma.car.createMany({ data: cars });
+  await prisma.pilot.createMany({ data: pilots });
+}
 
 main()
   .then(async () => {
