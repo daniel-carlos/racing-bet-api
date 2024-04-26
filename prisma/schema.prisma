@@ -29,51 +29,53 @@ model User {
 }
 
 model Driver {
-  id        Int          @id @default(autoincrement())
-  name      String
+  id         Int          @id @default(autoincrement())
+  name       String
   RaceDriver RaceDriver[]
-  modelURL  String?
+  modelURL   String?
 }
 
 model Car {
   id           Int          @id @default(autoincrement())
   name         String
   prefabName   String       @default("")
-  RaceDriver    RaceDriver[]
+  RaceDriver   RaceDriver[]
   speed        Float
   acceleration Float
   steering     Float
 }
 
 enum RaceFinalStatus {
+  WAITING
   FINISHED // O drivero completou a corrida da maneira tradicional.
   RETIREMENT_CAR_FAILURE // O drivero não completou a corrida devido a um problema com o carro.
   RETIREMENT_TIME_LIMIT // O drivero foi eliminado da corrida por tempo limite.
+  CANCELED
 }
 
 model RaceDriver {
   id        Int    @id @default(autoincrement())
   gridPlace Int    @default(1)
   driver    Driver @relation(fields: [driverId], references: [id])
-  driverId   Int
+  driverId  Int
   race      Race   @relation(fields: [raceId], references: [id], onDelete: Cascade)
   raceId    Int
   Bet       Bet[]
   car       Car    @relation(fields: [carId], references: [id])
   carId     Int
 
-  finalStatus RaceFinalStatus?
+  finalStatus RaceFinalStatus @default(WAITING)
   finalTime   Float?
   finalPlace  Int?
 }
 
 model Race {
-  id        Int          @id @default(autoincrement())
-  Bet       Bet[]
+  id         Int          @id @default(autoincrement())
+  Bet        Bet[]
   RaceDriver RaceDriver[]
-  date      String
-  raceTime  Int          @default(180)
-  laps      Int          @default(3)
+  date       String
+  raceTime   Int          @default(180)
+  laps       Int          @default(3)
 }
 
 model Bet {
@@ -82,8 +84,8 @@ model Bet {
   raceId   Int
   position Int
 
-  user        User       @relation(fields: [userId], references: [id])
-  userId      Int
+  user         User       @relation(fields: [userId], references: [id])
+  userId       Int
   raceDriver   RaceDriver @relation(fields: [raceDriverId], references: [id])
   raceDriverId Int
 

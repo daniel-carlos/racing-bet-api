@@ -50,7 +50,7 @@ export class RaceService {
       },
     });
 
-    return this.SetDrivers({
+    await this.SetDrivers({
       carIds: data.carIds,
       driverIds: data.driverIds,
       raceId: race.id,

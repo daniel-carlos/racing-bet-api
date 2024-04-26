@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "RaceFinalStatus" AS ENUM ('FINISHED', 'RETIREMENT_CAR_FAILURE', 'RETIREMENT_TIME_LIMIT');
+CREATE TYPE "RaceFinalStatus" AS ENUM ('WAITING', 'FINISHED', 'RETIREMENT_CAR_FAILURE', 'RETIREMENT_TIME_LIMIT', 'CANCELED');
 
 -- CreateTable
 CREATE TABLE "User" (
@@ -41,7 +41,7 @@ CREATE TABLE "RaceDriver" (
     "driverId" INTEGER NOT NULL,
     "raceId" INTEGER NOT NULL,
     "carId" INTEGER NOT NULL,
-    "finalStatus" "RaceFinalStatus",
+    "finalStatus" "RaceFinalStatus" NOT NULL DEFAULT 'WAITING',
     "finalTime" DOUBLE PRECISION,
     "finalPlace" INTEGER,
 
