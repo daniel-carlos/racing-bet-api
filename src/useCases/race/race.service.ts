@@ -152,7 +152,6 @@ export class RaceService {
           });
         }
       });
-      console.log('RaceDrivers updated successfully!');
     } catch (error) {
       console.error('Error updating RaceDrivers:', error);
     } finally {
