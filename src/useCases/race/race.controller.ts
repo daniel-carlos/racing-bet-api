@@ -18,7 +18,11 @@ import {
 } from './dto/create-race.dto';
 import { RaceService } from './race.service';
 import { UpdateRaceDTO } from './dto/update-race.sdto';
-import { PatchRaceDTO } from './dto/patch-race.dto';
+import {
+  PatchRaceDTO,
+  PatchRaceResultDTO,
+  PatchRaceResultsManyDTO,
+} from './dto/patch-race.dto';
 import { RemoveDriversFromRaceDTO } from './dto/remove-drivers.dto';
 
 @Controller('races')
@@ -77,5 +81,26 @@ export class RaceController {
   @Delete(':id')
   async delete(@Param('id', ParseIntPipe) id) {
     return this.raceService.delete(id);
+  }
+
+  @Patch('results/set/:id')
+  @UsePipes(new ValidationPipe())
+  async patchSetResult(
+    @Param('id', ParseIntPipe) id,
+    @Body() data: PatchRaceResultDTO,
+  ) {
+    return this.raceService.patchSetResult(id, data);
+  }
+
+  @Patch('results/set')
+  @UsePipes(new ValidationPipe())
+  async patchSetResultMany(@Body() data: PatchRaceResultsManyDTO) {
+    return this.raceService.patchSetResultsMany(data);
+  }
+
+  @Patch('results/reset/:id')
+  @UsePipes(new ValidationPipe())
+  async patchResetResult(@Param('id', ParseIntPipe) id) {
+    return this.raceService.patchResetResult(id);
   }
 }

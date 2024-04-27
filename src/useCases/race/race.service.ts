@@ -6,7 +6,11 @@ import {
 } from './dto/create-race.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UpdateRaceDTO } from './dto/update-race.sdto';
-import { PatchRaceDTO } from './dto/patch-race.dto';
+import {
+  PatchRaceDTO,
+  PatchRaceResultDTO,
+  PatchRaceResultsManyDTO,
+} from './dto/patch-race.dto';
 import { RemoveDriversFromRaceDTO } from './dto/remove-drivers.dto';
 
 @Injectable()
@@ -17,7 +21,7 @@ export class RaceService {
     return this.prisma.race.findMany({
       include: {
         RaceDriver: {
-          select: { car: true, driver: true },
+          select: { car: true, driver: true, id: true },
         },
       },
     });
@@ -28,7 +32,7 @@ export class RaceService {
       where: { id },
       include: {
         RaceDriver: {
-          select: { car: true, driver: true, gridPlace: true },
+          select: { car: true, driver: true, gridPlace: true, id: true },
           orderBy: {
             gridPlace: 'asc',
           },
@@ -116,5 +120,43 @@ export class RaceService {
         },
       },
     });
+  }
+
+  async patchSetResult(
+    raceDriverId: number,
+    { finalStatus, finalPlace, finalTime }: PatchRaceResultDTO,
+  ) {
+    return this.prisma.raceDriver.update({
+      where: { id: raceDriverId },
+      data: { finalStatus, finalPlace, finalTime },
+    });
+  }
+  async patchResetResult(raceDriverId: number) {
+    return this.prisma.raceDriver.update({
+      where: { id: raceDriverId },
+      data: { finalStatus: 'WAITING', finalPlace: null, finalTime: null },
+    });
+  }
+
+  async patchSetResultsMany({ raceDrivers }: PatchRaceResultsManyDTO) {
+    try {
+      await this.prisma.$transaction(async (tx) => {
+        for (const raceDriver of raceDrivers) {
+          await tx.raceDriver.update({
+            where: { id: raceDriver.id },
+            data: {
+              finalStatus: raceDriver.finalStatus,
+              finalTime: raceDriver.finalTime,
+              finalPlace: raceDriver.finalPlace,
+            },
+          });
+        }
+      });
+      console.log('RaceDrivers updated successfully!');
+    } catch (error) {
+      console.error('Error updating RaceDrivers:', error);
+    } finally {
+      await this.prisma.$disconnect();
+    }
   }
 }
