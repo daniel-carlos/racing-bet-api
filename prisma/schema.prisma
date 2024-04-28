@@ -25,21 +25,21 @@ model User {
   username  String   @unique
   money     Float    @default(0)
   name      String
-  Bet       Bet[]
+  bets      Bet[]
 }
 
 model Driver {
-  id         Int          @id @default(autoincrement())
-  name       String
-  RaceDriver RaceDriver[]
-  modelURL   String?
+  id          Int          @id @default(autoincrement())
+  name        String
+  raceDrivers RaceDriver[]
+  modelURL    String?
 }
 
 model Car {
   id           Int          @id @default(autoincrement())
   name         String
   prefabName   String       @default("")
-  RaceDriver   RaceDriver[]
+  raceDrivers  RaceDriver[]
   speed        Float
   acceleration Float
   steering     Float
@@ -60,7 +60,7 @@ model RaceDriver {
   driverId  Int
   race      Race   @relation(fields: [raceId], references: [id], onDelete: Cascade)
   raceId    Int
-  Bet       Bet[]
+  bets      Bet[]
   car       Car    @relation(fields: [carId], references: [id])
   carId     Int
 
@@ -70,12 +70,12 @@ model RaceDriver {
 }
 
 model Race {
-  id         Int          @id @default(autoincrement())
-  Bet        Bet[]
-  RaceDriver RaceDriver[]
-  date       String
-  raceTime   Int          @default(180)
-  laps       Int          @default(3)
+  id          Int          @id @default(autoincrement())
+  bets        Bet[]
+  raceDrivers RaceDriver[]
+  date        String
+  raceTime    Int          @default(180)
+  laps        Int          @default(3)
 }
 
 model Bet {

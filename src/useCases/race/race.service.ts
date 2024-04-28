@@ -20,7 +20,7 @@ export class RaceService {
   async list() {
     return this.prisma.race.findMany({
       include: {
-        RaceDriver: {
+        raceDrivers: {
           select: {
             car: true,
             driver: true,
@@ -38,7 +38,7 @@ export class RaceService {
     return this.prisma.race.findUnique({
       where: { id },
       include: {
-        RaceDriver: {
+        raceDrivers: {
           select: { car: true, driver: true, gridPlace: true, id: true },
           orderBy: {
             gridPlace: 'asc',
@@ -114,7 +114,7 @@ export class RaceService {
     return this.prisma.race.delete({
       where: { id },
       include: {
-        RaceDriver: true,
+        raceDrivers: true,
       },
     });
   }
