@@ -21,7 +21,14 @@ export class RaceService {
     return this.prisma.race.findMany({
       include: {
         RaceDriver: {
-          select: { car: true, driver: true, id: true },
+          select: {
+            car: true,
+            driver: true,
+            id: true,
+            finalPlace: true,
+            finalTime: true,
+            finalStatus: true,
+          },
         },
       },
     });
