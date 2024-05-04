@@ -48,10 +48,8 @@ export class RaceService {
     });
   }
 
-  async createSimple(data: CreateRaceDTO) {
-    return this.prisma.race.create({
-      data,
-    });
+  async createSimple({ date, laps, raceTime }: CreateRaceDTO) {
+    return this.prisma.race.create({ data: { date, laps, raceTime } });
   }
 
   async createWithDrivers(data: CreateRaceWithDriversDTO) {

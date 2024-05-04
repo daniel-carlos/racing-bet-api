@@ -3,6 +3,12 @@ import { IsDateString, IsInt } from 'class-validator';
 export class CreateRaceDTO {
   @IsDateString()
   date: string;
+
+  @IsInt()
+  raceTime: number;
+
+  @IsInt()
+  laps: number;
 }
 
 export class SetDriversToRaceDTO {
