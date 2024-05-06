@@ -21,23 +21,23 @@ datasource db {
 model User {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  email     String   @unique
-  username  String   @unique
+  email     String   @unique @db.VarChar(128)
+  username  String   @unique @db.VarChar(32)
   money     Float    @default(0)
-  name      String
+  name      String   @db.VarChar(128)
   bets      Bet[]
 }
 
 model Driver {
   id          Int          @id @default(autoincrement())
-  name        String
+  name        String       @db.VarChar(64)
   raceDrivers RaceDriver[]
-  modelURL    String?
+  modelURL    String?      @db.VarChar(20)
 }
 
 model Car {
   id           Int          @id @default(autoincrement())
-  name         String
+  name         String       @db.VarChar(64)
   prefabName   String       @default("")
   raceDrivers  RaceDriver[]
   speed        Float
@@ -73,7 +73,7 @@ model Race {
   id          Int          @id @default(autoincrement())
   bets        Bet[]
   raceDrivers RaceDriver[]
-  date        String
+  date        DateTime     @db.Timestamp()
   raceTime    Int          @default(180)
   laps        Int          @default(3)
 }
