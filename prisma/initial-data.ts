@@ -58,12 +58,12 @@ export const cars = [
 ];
 
 export const drivers = [
-  { name: 'Peter T', modelURL: 'peter' },
-  { name: 'Alex Harbor', modelURL: 'alex' },
-  { name: 'Jordan Nerd', modelURL: 'jordan' },
-  { name: 'Ralph Lime', modelURL: 'ralph' },
-  { name: 'Ellen Munchen', modelURL: 'ellen' },
-  { name: 'Maurice Birminghan', modelURL: 'maurice' },
-  { name: 'Danny Frag', modelURL: 'danny' },
-  { name: 'Ryu Mach', modelURL: 'ryu' },
+  { name: 'Sansão', modelURL: 'sansao' },
+  { name: 'Lori', modelURL: 'lori' },
+  { name: 'Chiquinha', modelURL: 'chiquinha' },
+  { name: 'Jade', modelURL: 'jade' },
+  { name: 'Nick', modelURL: 'nick' },
+  { name: 'Darlin', modelURL: 'darlin' },
+  { name: 'Marlin', modelURL: 'marlin' },
+  { name: 'Sayid', modelURL: 'sayid' },
 ];

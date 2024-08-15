@@ -39,7 +39,15 @@ export class RaceService {
       where: { id },
       include: {
         raceDrivers: {
-          select: { car: true, driver: true, gridPlace: true, id: true },
+          select: {
+            car: true,
+            driver: true,
+            gridPlace: true,
+            id: true,
+            finalPlace: true,
+            finalTime: true,
+            finalStatus: true,
+          },
           orderBy: {
             gridPlace: 'asc',
           },
@@ -49,13 +57,13 @@ export class RaceService {
   }
 
   async createSimple({ date, laps, raceTime }: CreateRaceDTO) {
-    return this.prisma.race.create({ data: { date, laps, raceTime } });
+    return this.prisma.race.create({ data: { date: new Date(), laps, raceTime } });
   }
 
   async createWithDrivers(data: CreateRaceWithDriversDTO) {
     const race = await this.prisma.race.create({
       data: {
-        date: data.date,
+        date: new Date(),
       },
     });
 
