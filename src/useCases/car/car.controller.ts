@@ -15,7 +15,9 @@ import { CreateCarDTO } from './dto/create-car.dto';
 import { UpdateCarDTO } from './dto/update-car.dto';
 import { PatchCarDTO } from './dto/patch-car.dto';
 import { CarService } from './car.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Cars')
 @Controller('cars')
 export class CarController {
   constructor(private readonly carService: CarService) {}

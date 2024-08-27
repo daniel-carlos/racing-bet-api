@@ -24,7 +24,9 @@ import {
   PatchRaceResultsManyDTO,
 } from './dto/patch-race.dto';
 import { RemoveDriversFromRaceDTO } from './dto/remove-drivers.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Races')
 @Controller('races')
 export class RaceController {
   constructor(private readonly raceService: RaceService) {}

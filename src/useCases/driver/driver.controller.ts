@@ -15,7 +15,9 @@ import { CreateCarDTO } from 'src/useCases/car/dto/create-car.dto';
 import { PatchCarDTO } from 'src/useCases/car/dto/patch-car.dto';
 import { UpdateCarDTO } from 'src/useCases/car/dto/update-car.dto';
 import { DriverService } from './driver-service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Drivers')
 @Controller('drivers')
 export class DriverController {
   constructor(private readonly driverService: DriverService) {}
