@@ -10,8 +10,8 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  // url      = env("DATABASE_URL")
-  url      = "postgresql://postgres:daniel@localhost:5432/racingbet?schema=public"
+  url      = env("DATABASE_URL")
+  // url      = "postgresql://postgres:daniel@localhost:5432/racingbet?schema=public"
 }
 
 // datasource db {

@@ -54,7 +54,7 @@ export class RaceController {
 
   @Get(':id')
   async show(@Param('id', ParseIntPipe) id) {
-    return this.raceService.show(id);
+    return await this.raceService.show(id);
   }
 
   @Put(':id')
